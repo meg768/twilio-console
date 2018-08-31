@@ -1,6 +1,6 @@
 {
   "name": "twilio-console",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "twilio-console",
   "main": "index.js",
   "scripts": {
