@@ -1,6 +1,6 @@
 {
   "name": "twilio-console",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "twilio-console",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/meg768/twilio-console.git"
   },
+  "keywords": [
+    "twilio",
+    "console",
+    "notifications"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
