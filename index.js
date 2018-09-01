@@ -1,58 +1,65 @@
-var util    = require('util');
-var methods = ['log', 'info', 'warn', 'error'];
-var output  = {};
 
-methods.forEach(name => {
+var Twilio = require('twilio');
+var util = require('util');
+var methods = ['info', 'warn', 'error'];
+var output = {};
+
+methods.forEach(function(name) {
 	output[name] = console[name];
 });
 
-var TwilioConsole = module.exports = function(options) {
+var twilioConsole = module.exports = function(options) {
 
 	options = options || {};
 
-	var util    = require('util');
-	var user    = options.user ? options.user : process.env.TWILIO_USER;
-	var token   = options.token ? options.token : process.env.TWILIO_TOKEN;
+	var sid    = process.env.TWILIO_SID;
+	var token  = process.env.TWILIO_TOKEN;
+    var from   = process.env.TWILIO_FROM;
+    var to     = process.env.TWILIO_TO;
 
-	if (user == undefined || token == undefined) {
-		output.warn('Environment variables PUSHOVER_USER and/or PUSHOVER_TOKEN not defined. Push notifications will not be able to be sent.');
+	if (sid == undefined || token == undefined || from == undefined || to == undefined) {
+		output.warn('Environment variables TWILIO_SID/TWILIO_TOKEN/TWILIO_FROM/TWILIO_TO not defined. SMS via Twilio will not be able to be sent.');
 	}
 	else {
 
 		function send(payload) {
-			try {
+            return new Promise(function(resolve, reject) {
+                try {
+                    var twilio = Twilio(sid, token);
+                    var options = {};
 
-				var PushoverNotifications = require('pushover-notifications');
-				var push = new PushoverNotifications({user:user, token:token});
+                    options.from = from;
+                    options.to   = to;
+                    options.body = payload.message;
 
-				// See https://pushover.net/api for payload parameters
+                    twilio.messages.create(options).then(function(message) {
+                        // ...
+                    })
+                    .catch(function(error) {
+                        // ...
+                    });
 
-				push.send(payload, function(error, result) {
-					if (error) {
-						output.error(error.stack);
-					}
-				});
-			}
-			catch(error) {
-				output.error('Failed to send Pushover notification.', error.message);
-			}
+    			}
+    			catch(error) {
+    				output.error('Failed to send Twilio notification.', error.message);
+    			}
+
+            });
 		};
 
-		methods.forEach(name => {
-			if (name != 'log') {
-				var method = output[name];
+		methods.forEach(function(name) {
+			var method = output[name];
 
-				console[name] = function() {
-					var text = util.format.apply(util.format, arguments);
+			console[name] = function() {
+				var text = util.format.apply(util.format, arguments);
 
-					send({priority:name == 'info' ? 0 : 1, message:text});
-				    return method.apply(console, [text]);
-				};
-			}
+				send({priority:name == 'info' ? 0 : 1, message:text});
+			    return method.apply(console, [text]);
+			};
 		});
 
 	}
 
 };
 
-TwilioConsole();
+twilioConsole();
