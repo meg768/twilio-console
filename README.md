@@ -1,6 +1,6 @@
 # Twilio Console
 
-Intercepts messages to console and sends them to Twilio.
+Intercepts messages to console and sends them via Twilio.
 
 ## Installation
 
@@ -14,7 +14,7 @@ npm install twilio-console --save
 require('twilio-console');
 ````
 
-Every call to **console.info**, **console.warn** or **console.error** will send a message
+After this, every call to **console.info**, **console.warn** or **console.error** will send a message
 using Twilio.
 
 Make sure the following environment variables are defined.
