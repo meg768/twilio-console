@@ -1,6 +1,6 @@
 # Twilio Console
 
-**Under construction**
+**Under construction...**
 
 Intercepts messages to console and sends them to Twilio.
 
@@ -19,7 +19,7 @@ require('twilio-console');
 Every call to **console.info**, **console.warn** or **console.error** will send a message
 using Twilio.
 
-Make sure the following environment variables are undefined
+Make sure the following environment variables are defined
 
 - TWILIO_SID
 - TWILIO_TOKEN
