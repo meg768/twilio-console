@@ -16,7 +16,7 @@ npm install twilio-console --save
 require('twilio-console');
 ````
 
-Every call to console.info, console.warn, console.error will send a message
+Every call to **console.info**, **console.warn** or **console.error** will send a message
 using Twilio.
 
 Make sure the following environment variables are undefined
