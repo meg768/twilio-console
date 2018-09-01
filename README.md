@@ -20,6 +20,7 @@ Every call to **console.info**, **console.warn** or **console.error** will send 
 using Twilio.
 
 Make sure the following environment variables are defined
+(See https://www.npmjs.com/package/dotenv for more information)
 
 - TWILIO_SID
 - TWILIO_TOKEN
